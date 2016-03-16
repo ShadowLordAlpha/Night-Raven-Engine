@@ -12,7 +12,7 @@ public class Test {
 			
 			int buffer = audioCore.loadSound(new File("bounce.wav"));
 			source.play(buffer);
-			
+
 			char c = ' ';
 			while(c != 'q') {
 				c = (char) System.in.read();
