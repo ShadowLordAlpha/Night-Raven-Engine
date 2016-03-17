@@ -44,7 +44,7 @@ public class ALSource implements AutoCloseable {
 		return sources;
 	}
 	
-	public ALSource reset() {
+	public ALSource regen() {
 		if(sourceName != 0 && this.isSource()) {
 			this.close();
 		}

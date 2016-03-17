@@ -35,7 +35,7 @@ private static final Logger LOG = LoggerFactory.getLogger(ALBuffer.class);
 		return buffers;
 	}
 	
-	public ALBuffer reset() {
+	public ALBuffer reget() {
 		if(bufferName != 0 && this.isBuffer()) {
 			this.close();
 		}
@@ -46,6 +46,10 @@ private static final Logger LOG = LoggerFactory.getLogger(ALBuffer.class);
 	
 	public int getBufferName() {
 		return this.bufferName;
+	}
+	
+	public ALBuffer bufferData() {
+		AL10.alBufferData(bufferName, format, data, size, frequency);
 	}
 
 	public boolean isBuffer() {
