@@ -1,1 +1,2 @@
-rootProject.name = 'Night Raven Engine'
+include 'Math', 'Audio'
+rootProject.name = 'Night-Raven'

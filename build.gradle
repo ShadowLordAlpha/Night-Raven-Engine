@@ -26,13 +26,44 @@ dependencies {
     compile "org.joml:joml:${jomlVersion}"
     compile "org.slf4j:slf4j-api:${slf4japiVersion}"
     compile "org.slf4j:slf4j-simple:${slf4jlogVersion}"
+	compile project(':Math'), project(':Audio')
 }
 
 jar {
-	baseName = 'EchoEngine'
-	version = '0.1.0a'
+	baseName = 'Night-Raven'
+	version = '0.1.0-a'
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.10'
+	gradleVersion = '2.12'
+}
+
+subprojects {
+
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	group = 'sla.nightraven'
+	version '0.0.1-a'
+	
+	repositories {
+		mavenCentral()
+		
+	}
+	
+	dependencies {
+	    compile "org.slf4j:slf4j-api:${slf4japiVersion}"
+		testCompile "org.slf4j:slf4j-simple:${slf4japiVersion}"
+		testCompile "junit:junit:4.12"
+	}
+}
+
+project(':Math') {
+
+}
+
+project(':Audio') {
+
+	dependencies {
+		compile project(':Math')
+	}
 }
