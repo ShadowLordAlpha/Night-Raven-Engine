@@ -169,25 +169,4 @@ public class ALCException extends RuntimeException {
 			// TODO Auto-generated constructor stub
 		}
 	}
-
-	// TODO: Documentation
-	public static void checkALCError(long device) {
-		int error = ALC10.alcGetError(device);
-		switch (error) {
-		case ALC10.ALC_NO_ERROR:
-			break;
-		case ALC10.ALC_INVALID_DEVICE:
-			throw new ALCInvalidDeviceException("A bad device was passed to an OpenAL function.");
-		case ALC10.ALC_INVALID_CONTEXT:
-			throw new ALCInvalidContextException("A bad context was passed to an OpenAL function.");
-		case ALC10.ALC_INVALID_ENUM:
-			throw new ALCInvalidEnumException("An unknown enum value was passed to an OpenAL function.");
-		case ALC10.ALC_INVALID_VALUE:
-			throw new ALCInvalidValueException("An invalid value was passed to an OpenAL function.");
-		case ALC10.ALC_OUT_OF_MEMORY:
-			throw new ALCOutOfMemoryException("The requested operation resulted in OpenAL running out of memory.");
-		default:
-			throw new ALCException(ALC10.alcGetString(device, error));
-		}
-	}
 }
