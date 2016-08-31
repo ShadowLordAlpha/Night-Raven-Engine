@@ -19,6 +19,8 @@
  */
 package sla.nightraven;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The Version class provides a common immutable version system compatible with the Vulkan API.
  * 
@@ -29,19 +31,26 @@ public class Version {
 	/**
 	 * Major version number, should be incremented whenever the program is changed in a non-backwards compatible way.
 	 */
-	private final int major;
+	@JsonProperty("major")
+	private int major;
 
 	/**
 	 * Minor version number, should be incremented whenever the program is changed to add new features but remains
 	 * backwards compatible.
 	 */
-	private final int minor;
+	@JsonProperty("minor")
+	private int minor;
 
 	/**
 	 * Patch version number, should be incremented whenever the program has a fix applied that does not contain any
 	 * program changes.
 	 */
-	private final int patch;
+	@JsonProperty("patch")
+	private int patch;
+	
+	protected Version() {
+		
+	}
 
 	/**
 	 * @param major
@@ -87,6 +96,10 @@ public class Version {
 	 */
 	public int getVersion() {
 		return (major << 22) | (minor << 12) | patch;
+	}
+	
+	public String getVersionString() {
+		return major + "." + minor + "." + patch;
 	}
 
 	@Override

@@ -40,8 +40,8 @@ public class TheiaModule implements IWindowModule {
 		GLFW.glfwSetErrorCallback((int error, long description) -> LOG.warn("GLFW Error {}: {} ", error, memUTF8(description)));
 
 		if (!glfwInit()) { 
-			LOG.error("Failed to Initilize GLFW!"); 
-			System.exit(1);
+			LOG.error("Failed to Initilize GLFW: {}", 1001); 
+			System.exit(1001);
 		}
 
 		// TODO: anything else?

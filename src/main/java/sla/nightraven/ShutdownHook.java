@@ -19,22 +19,22 @@
  */
 package sla.nightraven;
 
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The ShutdownThread class is in charge of cleaning up resources after the engine has finished and is in the processes
- * of shutting down properly. In the case of an unexpected shutdown of the program it is undefined what happens to the
- * allocated native resources however they should be cleaned up by the underlying OS or it does not matter in the case
- * of a system shutdown.
+ * The ShutdownHook is in charge of cleaning up native resources at the very end when the JVM is normally shutting down.
+ * If shutdown occurs for another reason, such as power loss, there is no guarantee that the ShutdownHook will run.
  * 
  * @author Josh "ShadowLordAlpha"
  */
-public class ShutdownThread implements Runnable {
+public class ShutdownHook implements Runnable {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ShutdownThread.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ShutdownHook.class);
+	private List<AutoCloseable> closeable;
 	
-	public ShutdownThread() {}
+	public ShutdownHook() {}
 
 	@Override
 	public void run() {

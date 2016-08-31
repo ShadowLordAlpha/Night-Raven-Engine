@@ -7,24 +7,29 @@ repositories {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
-mainClassName = ""
+mainClassName = "sla.nightraven.RavenCore"
 applicationDefaultJvmArgs = [""]
-javadoc.options.tags = ['sla.remarks:a:Remarks:', 'sla.ts:a:Thread Safety:', 'sla.warn:a:Warning:', 'sla.reen:a:Reentrancy:']
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-project.ext.lwjglVersion = "3.0.1-SNAPSHOT" // This is the snapshot version of LWJGL and its probably broken in some way :p
-project.ext.jomlVersion = "+"
-project.ext.slf4jVersion = "+"
 
 dependencies {
+
     compile "org.lwjgl:lwjgl:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
-    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
-    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
+    compile "org.lwjgl:lwjgl-glfw:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-vulkan:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-openal:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-stb:${lwjglVersion}"
+    
+    runtime "org.lwjgl:lwjgl:${lwjglVersion}:natives-${lwjglArch}"
+    runtime "org.lwjgl:lwjgl-glfw:${lwjglVersion}:natives-${lwjglArch}"
+    runtime "org.lwjgl:lwjgl-vulkan:${lwjglVersion}:natives-${lwjglArch}"
+    runtime "org.lwjgl:lwjgl-openal:${lwjglVersion}:natives-${lwjglArch}"
+    runtime "org.lwjgl:lwjgl-stb:${lwjglVersion}:natives-${lwjglArch}"
+    
     compile "org.joml:joml:${jomlVersion}"
     compile "org.slf4j:slf4j-api:${slf4jVersion}"
-    compile "org.json:json:+"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.7.0"
     
     testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
     testCompile "junit:junit:4.12"
@@ -36,5 +41,5 @@ jar {
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.12'
+	gradleVersion = '3.0'
 }
