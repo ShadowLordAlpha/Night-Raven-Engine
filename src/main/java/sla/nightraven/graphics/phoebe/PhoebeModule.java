@@ -35,7 +35,10 @@ public class PhoebeModule implements IGraphicsModule {
 	private String[] validationLayers = { "VK_LAYER_LUNARG_standard_validation"
 	};
 
-	VkDebugReportCallbackEXT debugCallback = VkDebugReportCallbackEXT.create((int flags, int objectType, long object, long location, int messageCode, long pLayerPrefix, long pMessage, long pUserData) -> {LOG.debug("{}: {}", memUTF8(pLayerPrefix), memUTF8(pMessage)); return VK10.VK_FALSE;});
+	VkDebugReportCallbackEXT debugCallback = VkDebugReportCallbackEXT.create((int flags, int objectType, long object, long location, int messageCode, long pLayerPrefix, long pMessage, long pUserData) -> {
+		LOG.debug("{}: {}", memUTF8(pLayerPrefix), memUTF8(pMessage));
+		return VK10.VK_FALSE;
+	});
 	VkInstance instance;
 
 	public PhoebeModule(String appName, Version appVersion) {
@@ -81,7 +84,7 @@ public class PhoebeModule implements IGraphicsModule {
 			instance = new VkInstance(instanceId.get(0), createInfo);
 			LOG.debug("VK_EXT_debug_report: {}", instance.getCapabilities().VK_EXT_debug_report);
 			setupDebugCallback();
-			
+
 			VK10.vkDestroyInstance(instance, null);
 		}
 	}
@@ -111,7 +114,8 @@ public class PhoebeModule implements IGraphicsModule {
 				LOG.debug("adding debug report");
 				PointerBuffer validationBuffer = stack.callocPointer(pointerBuffer.remaining() + 1);
 				validationBuffer.put(pointerBuffer);
-				validationBuffer.put(stack.UTF8("VK_EXT_debug_report")); // TODO: this probably should not be a direct string
+				validationBuffer.put(stack.UTF8("VK_EXT_debug_report")); // TODO: this probably should not be a direct
+																			// string
 				return validationBuffer;
 			}
 

@@ -43,11 +43,12 @@ public class RavenCore {
 		
 		try(IWindowModule windowModule = new TheiaModule()) {
 			
-			String title = application.getTitle() + ((application.getSubTitle() == null) ? "" : ": " + application.getSubTitle()) + " v" + application.getVersion().getVersionString();
-			IWindow window = windowModule.newBuilder().setTitle(title).build().setVisible(true);
+			String title = application.getTitle() + ((application.getSubTitle() == null) ? "" : " - " + application.getSubTitle()) + " v" + application.getVersion().getVersionString();
+			IWindow window = windowModule.newBuilder().setTitle(title).setIcon(application.getIcon()).build().setVisible(true);
 			
 			while(!window.shouldClose()) {
 				windowModule.update();
+				window.swapBuffers();
 			}
 			
 		} catch(Exception e) {

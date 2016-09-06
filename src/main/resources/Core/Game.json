@@ -1,12 +1,10 @@
 {
-	"file_version": 0,
-	"major_version": 0,
-	"minor_version": 1,
-	"patch_version": 0,
-	"game_name": "Example Game #1",
-	
-	"base_window": {
-		"title": "Game 1 - Experiment",
-		
+	"title": "Universal Century Gundam Online",
+	"sub_title": "Rebirth",
+	"icon_file": null,
+	"version": {
+		"major": 0,
+		"minor": 1,
+		"patch": 0
 	}
 }
