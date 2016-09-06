@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import sla.nightraven.graphics.IGraphicsModule;
+import sla.nightraven.graphics.phoebe.PhoebeModule;
 import sla.nightraven.window.IWindow;
 import sla.nightraven.window.IWindowModule;
 import sla.nightraven.window.theia.TheiaModule;
@@ -25,7 +26,7 @@ public class RavenCore {
 	
 	private Application application;
 	// private IWindowModule windowModule;
-	private IGraphicsModule graphicsModule;
+	// private IGraphicsModule graphicsModule;
 	
 	public RavenCore() throws JsonParseException, JsonMappingException, IOException {
 		
@@ -41,7 +42,7 @@ public class RavenCore {
 		
 		LOG.debug("Initilizing Modules");
 		
-		try(IWindowModule windowModule = new TheiaModule()) {
+		try(IWindowModule windowModule = new TheiaModule(); IGraphicsModule graphicsModule = new PhoebeModule(application.getTitle(), application.getVersion())) {
 			
 			String title = application.getTitle() + ((application.getSubTitle() == null) ? "" : " - " + application.getSubTitle()) + " v" + application.getVersion().getVersionString();
 			IWindow window = windowModule.newBuilder().setTitle(title).setIcon(application.getIcon()).build().setVisible(true);
