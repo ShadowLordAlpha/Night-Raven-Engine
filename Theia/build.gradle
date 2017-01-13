@@ -1,0 +1,12 @@
+/*
+ * Subproject specific build file
+ *
+ * Subproject: Theia
+ */
+ 
+dependencies {
+	
+	compile "org.lwjgl:lwjgl-glfw:${lwjglVersion}"
+	
+	runtime "org.lwjgl:lwjgl-glfw:${lwjglVersion}:${lwjglNatives}"
+}

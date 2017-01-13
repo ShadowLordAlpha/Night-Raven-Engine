@@ -1,1 +1,8 @@
+include 'Theia' // Window module
+include 'Gaia' // Physics module
+include 'Phoebe' // Graphics module
+include 'Rhea' // Audio module
+include 'Iris' // Network module
+include 'Themis' // Event module
+
 rootProject.name = 'Night-Raven'

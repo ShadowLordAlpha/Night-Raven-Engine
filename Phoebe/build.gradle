@@ -1,0 +1,8 @@
+
+dependencies {
+	
+	compile project(':Theia')
+	compile "org.lwjgl:lwjgl-bgfx:${lwjglVersion}"
+	
+	runtime "org.lwjgl:lwjgl-bgfx:${lwjglVersion}:${lwjglNatives}"
+}

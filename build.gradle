@@ -1,45 +1,57 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'application'
+import org.gradle.internal.os.OperatingSystem
 
-repositories {
-    mavenCentral()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+allprojects {
+
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+	
+	version = '0.2.0'
+
+	switch ( OperatingSystem.current() ) {
+		case OperatingSystem.WINDOWS:
+			project.ext.lwjglNatives = "natives-windows"
+			break
+		case OperatingSystem.LINUX:
+			project.ext.lwjglNatives = "natives-linux"
+			break
+		case OperatingSystem.MAC_OS:
+			project.ext.lwjglNatives = "natives-macos"
+			break
+	}
+	
+	repositories {
+    	mavenCentral()
+    	maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+	}
+	
+	dependencies {
+	
+		compile "org.lwjgl:lwjgl:${lwjglVersion}"
+		runtime "org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}"
+		
+		compile "org.slf4j:slf4j-api:${slf4jVersion}"
+		compile "org.slf4j:slf4j-simple:${slf4jVersion}"
+		
+		compile "org.joml:joml:${jomlVersion}"
+		
+		compile "com.code-disaster.steamworks4j:steamworks4j:${sw4jVersion}"
+		
+		testCompile "junit:junit:${junitVersion}"
+	}
 }
-
-mainClassName = "sla.nightraven.RavenCore"
-applicationDefaultJvmArgs = [""]
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 dependencies {
-
-    compile "org.lwjgl:lwjgl:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-glfw:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-vulkan:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-openal:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-stb:${lwjglVersion}"
-    
-    runtime "org.lwjgl:lwjgl:${lwjglVersion}:natives-${lwjglArch}"
-    runtime "org.lwjgl:lwjgl-glfw:${lwjglVersion}:natives-${lwjglArch}"
-    runtime "org.lwjgl:lwjgl-openal:${lwjglVersion}:natives-${lwjglArch}"
-    runtime "org.lwjgl:lwjgl-stb:${lwjglVersion}:natives-${lwjglArch}"
-    
-    compile "org.joml:joml:${jomlVersion}"
-    compile "org.slf4j:slf4j-api:${slf4jVersion}"
-    compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
-    
-    compile "org.slf4j:slf4j-simple:${slf4jVersion}"
-    // testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
-    testCompile "junit:junit:4.12"
-}
-
-jar {
-	baseName = 'NightRaven'
-	version = '0.1.0'
+	compile project(':Theia')
+	compile project(':Gaia')
+	compile project(':Phoebe')
+	compile project(':Rhea')
+	
+	compile "com.google.code.gson:gson:${gsonVersion}"
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '3.0'
+	gradleVersion = '3.2.1'
 }
