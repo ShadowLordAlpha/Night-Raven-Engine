@@ -5,8 +5,15 @@
  */
  
 dependencies {
+
+	// basic lwjgl3 dependency on its core
+	compile "org.lwjgl:lwjgl:${lwjglVersion}"
+	runtime "org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}"
 	
+	// lwjgl3 glfw bindings
 	compile "org.lwjgl:lwjgl-glfw:${lwjglVersion}"
-	
 	runtime "org.lwjgl:lwjgl-glfw:${lwjglVersion}:${lwjglNatives}"
+	
+	// Themis Module dependency, Event System
+	compile project(':Themis')
 }

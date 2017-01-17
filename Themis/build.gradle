@@ -1,0 +1,5 @@
+/*
+ * The Event System, otherwise know as Themis Module, for Night-Raven. This Module depends on nothing other than basic java
+ * so it can and probably be split off into its own separate project as it is also useful outside of this engine.
+ */
+ 

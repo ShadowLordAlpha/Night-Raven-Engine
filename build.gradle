@@ -29,27 +29,30 @@ allprojects {
 	
 	dependencies {
 	
-		compile "org.lwjgl:lwjgl:${lwjglVersion}"
-		runtime "org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}"
 		
-		compile "org.slf4j:slf4j-api:${slf4jVersion}"
-		compile "org.slf4j:slf4j-simple:${slf4jVersion}"
-		
-		compile "org.joml:joml:${jomlVersion}"
-		
-		compile "com.code-disaster.steamworks4j:steamworks4j:${sw4jVersion}"
 		
 		testCompile "junit:junit:${junitVersion}"
 	}
 }
 
 dependencies {
+
+	compile "org.lwjgl:lwjgl:${lwjglVersion}"
+	runtime "org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}"
+		
+	compile "org.slf4j:slf4j-api:${slf4jVersion}"
+	compile "org.slf4j:slf4j-simple:${slf4jVersion}"
+		
+	compile "org.joml:joml:${jomlVersion}"
+	
+	compile "com.google.code.gson:gson:${gsonVersion}"
+		
+	compile "com.code-disaster.steamworks4j:steamworks4j:${sw4jVersion}"
+		
 	compile project(':Theia')
 	compile project(':Gaia')
 	compile project(':Phoebe')
 	compile project(':Rhea')
-	
-	compile "com.google.code.gson:gson:${gsonVersion}"
 }
 
 task wrapper(type: Wrapper) {

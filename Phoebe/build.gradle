@@ -1,8 +1,8 @@
 
 dependencies {
 	
-	compile project(':Theia')
-	compile "org.lwjgl:lwjgl-bgfx:${lwjglVersion}"
+	// compile project(':Theia')
+	compile "org.lwjgl:lwjgl-vulkan:${lwjglVersion}"
 	
-	runtime "org.lwjgl:lwjgl-bgfx:${lwjglVersion}:${lwjglNatives}"
+	runtime "org.lwjgl:lwjgl-vulkan:${lwjglVersion}:${lwjglNatives}"
 }
