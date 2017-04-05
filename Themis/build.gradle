@@ -3,3 +3,8 @@
  * so it can and probably be split off into its own separate project as it is also useful outside of this engine.
  */
  
+ dependencies {
+
+	// Caffeine high performance cache library
+	compile 'com.github.ben-manes.caffeine:caffeine:2.4.0'
+}

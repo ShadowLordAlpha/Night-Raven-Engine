@@ -1,0 +1,19 @@
+/*
+ * Subproject specific build file
+ *
+ * Subproject: Rhea
+ */
+ 
+dependencies {
+
+	// basic lwjgl3 dependency on its core
+	compile "org.lwjgl:lwjgl:${lwjglVersion}"
+	runtime "org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}"
+	
+	// lwjgl3 glfw bindings
+	compile "org.lwjgl:lwjgl-openal:${lwjglVersion}"
+	runtime "org.lwjgl:lwjgl-openal:${lwjglVersion}:${lwjglNatives}"
+	
+	// Themis Module dependency, Event System
+	compile project(':Themis')
+}

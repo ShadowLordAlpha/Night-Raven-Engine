@@ -11,6 +11,6 @@
 * Themis - Event Module
 
 ## Dependencies
-* [LWJGL 3](https://www.lwjgl.org/) - 3.1.1
+* [LWJGL 3](https://www.lwjgl.org/) - 3.1.2
 * [JOML]() - 1.9.0
 * [SLF4J](http://slf4j.org/) - 1.7.21

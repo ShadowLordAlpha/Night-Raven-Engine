@@ -19,8 +19,9 @@
  */
 
 /**
- * 
+ * Package containing a Java Generics based Event System that will accept Java Objects as events and adding listeners
+ * for when each event is fired.
  * 
  * @author Josh "ShadowLordAlpha"
  */
-package sla.nightraven.themis;
+package com.shadowcs.nightraven.themis;

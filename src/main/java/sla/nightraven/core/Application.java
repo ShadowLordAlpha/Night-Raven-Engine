@@ -23,6 +23,18 @@ public class Application {
 		subTitle = FORMAT.format(new Date());
 		version = "0.0.0";
 	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public String getSubTitle() {
+		return subTitle;
+	}
+	
+	public String getVersion() {
+		return version;
+	}
 
 	@Override
 	public String toString() {
