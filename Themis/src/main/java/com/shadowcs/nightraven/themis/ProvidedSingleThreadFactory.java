@@ -44,6 +44,7 @@ public class ProvidedSingleThreadFactory implements ThreadFactory {
 
 	private AtomicInteger threadCount = new AtomicInteger(0);
 	private Semaphore sema = new Semaphore(0);
+	private Semaphore confirmSema = new Semaphore(0);
 	private Queue<Runnable> q = new ConcurrentLinkedQueue<Runnable>();
 
 	public ProvidedSingleThreadFactory() {
@@ -57,6 +58,7 @@ public class ProvidedSingleThreadFactory implements ThreadFactory {
 	 */
 	public void cede() {
 		threadCount.incrementAndGet();
+		confirmSema.release();
 		try {
 			while(true) {
 				sema.acquire();
@@ -68,6 +70,17 @@ public class ProvidedSingleThreadFactory implements ThreadFactory {
 
 		} catch(InterruptedException e) {
 
+		}
+	}
+	
+	// Tells when this class has obtained at least one thread
+	public void isReady() {
+		try {
+			confirmSema.acquire();
+			confirmSema.release();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
