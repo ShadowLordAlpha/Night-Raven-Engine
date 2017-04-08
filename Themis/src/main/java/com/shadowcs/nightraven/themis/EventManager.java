@@ -28,19 +28,19 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 
 /**
- * A generics based event system for using Java Objects as events.
  * 
- * @version 1.2.0
+ * 
+ * @since 0.3.0
  * @author Josh "ShadowLordAlpha"
  *
  */
 public class EventManager {
 	
-	private boolean async;
+	private AsynchronousMode async;
 	private ExecutorService pool;
 	private LoadingCache<Class<?>, Set<Consumer<?>>> listenerCache;
 	
-	EventManager(boolean async, ExecutorService pool) {
+	EventManager(AsynchronousMode async, ExecutorService pool) {
 		
 		this.async = async;
 		this.pool = pool;
@@ -71,40 +71,54 @@ public class EventManager {
 		return this;
 	}
 
-	// honestly might be able to get rid of the regular fireEvent methods as I doubt I will actually be using them
 	
-	public <V> EventManager fireEvent(V event) {
-		
-		return fireEvent((Class<V>) event.getClass(), event);
+	@SuppressWarnings("unchecked")
+	public <E> EventManager executeEvent(E event) {
+		return executeEvent((Class<E>) event.getClass(), event);
 	}
 	
-	public <V> EventManager fireEvent(Class<V> clazz, V event) {
+	public <E> EventManager executeEvent(Class<E> clazz, E event) {
 		
-		Set<Consumer<?>> list = listenerCache.get(clazz);
-		if(list == null) {
-			throw new NullPointerException();
-		}
-		
-		for(Consumer<?> listener: list) {
-			((Consumer<V>) listener).accept(event);
-		}
+		submitEvent(clazz, event);
 		
 		return this;
 	}
-
-	public <V> Future<V> fireEventAsync(V event) {
-		return fireEventAsync(event, pool);
+	
+	/**
+	 * Simplified Version
+	 * 
+	 * @param event
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public <E> Future<E> submitEvent(E event) {
+		return submitEvent((Class<E>) event.getClass(), event);
 	}
 	
-	public <V> Future<V> fireEventAsync(Class<V> clazz, V event) {
-		return fireEventAsync(clazz, event, pool);
-	}
-	
-	public <V> Future<V> fireEventAsync(V event, ExecutorService pool) {
-		return pool.submit(() -> fireEvent(event), event);
-	}
-	
-	public <V> Future<V> fireEventAsync(Class<V> clazz, V event, ExecutorService pool) {
-		return pool.submit(() -> fireEvent(clazz, event), event);
+	/**
+	 * 
+	 * @param clazz The class of the event
+	 * @param event The event to be fired
+	 * @return A {@code Future} representing the result of an asynchronous computation. {@code null} is the most common return and does not 
+	 * indicate that an error did occur but that there was no {@code Future} to return. This could be due to the {@code AsynchronousMode} or
+	 * because of an error.
+	 */
+	@SuppressWarnings("unchecked")
+	public <E> Future<E> submitEvent(Class<E> clazz, E event) {
+		
+		Set<Consumer<?>> list = listenerCache.get(clazz);
+		
+		switch(async) {
+			case EVENT:
+				return pool.submit(() -> list.forEach((listener) -> ((Consumer<E>) listener).accept(event)), event);
+			case NONE:
+				list.forEach((listener) -> ((Consumer<E>) listener).accept(event));
+				return null;
+			case TOTAL:
+				list.forEach((listener) -> pool.submit(() -> ((Consumer<E>) listener).accept(event)));
+				return null;
+			default:
+				return null;
+		}
 	}
 }
