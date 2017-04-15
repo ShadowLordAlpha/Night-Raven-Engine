@@ -7,8 +7,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.shadowcs.nightraven.theia.Theia;
 import com.shadowcs.nightraven.themis.EventManager;
-import com.shadowcs.nightraven.themis.ProvidedSingleThreadFactory;
+import com.shadowcs.nightraven.themis.ProvidedThreadFactory;
 import com.shadowcs.nightraven.themis.Themis;
 import com.shadowcs.nightraven.themis.util.function.Procedure;
 
@@ -20,7 +21,7 @@ public class NightRaven {
 	
 	// The following two objects take command of the programs main thread
 	private static EventManager eventManager;
-	private static ProvidedSingleThreadFactory threadFactory;
+	private static ProvidedThreadFactory threadFactory;
 	
 	private NightRaven() {}
 
@@ -28,7 +29,7 @@ public class NightRaven {
 		
 		logger.info("Night-Raven Engine Starting");
 		
-		threadFactory = new ProvidedSingleThreadFactory();
+		threadFactory = new ProvidedThreadFactory();
 		new Thread(NightRaven::CoreThread, "core").start();
 		
 		logger.debug("Ceding main thread");
@@ -47,6 +48,8 @@ public class NightRaven {
 		
 		// The main thread will always simply run procedure type events
 		getMainEventManager().addListener(Procedure.class, (procedure) -> procedure.invoke());
+		Theia.setMainEventManager(eventManager);
+		
 		
 		
 	}

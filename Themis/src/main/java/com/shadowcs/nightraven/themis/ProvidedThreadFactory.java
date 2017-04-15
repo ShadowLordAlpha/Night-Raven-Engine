@@ -38,7 +38,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Josh "ShadowLordAlpha"
  *
  */
-public class ProvidedSingleThreadFactory implements ThreadFactory {
+public class ProvidedThreadFactory implements ThreadFactory {
 
 	private static AtomicInteger wrapperCount = new AtomicInteger(0);
 
@@ -47,7 +47,7 @@ public class ProvidedSingleThreadFactory implements ThreadFactory {
 	private Semaphore confirmSema = new Semaphore(0);
 	private Queue<Runnable> q = new ConcurrentLinkedQueue<Runnable>();
 
-	public ProvidedSingleThreadFactory() {
+	public ProvidedThreadFactory() {
 
 	}
 

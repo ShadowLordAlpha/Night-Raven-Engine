@@ -1,24 +1,50 @@
 package com.shadowcs.nightraven.theia;
 
-import org.lwjgl.glfw.GLFW;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
+import org.lwjgl.glfw.GLFW;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.shadowcs.nightraven.theia.window.Window;
 import com.shadowcs.nightraven.themis.EventManager;
 import com.shadowcs.nightraven.themis.util.function.Procedure;
 
 public class Theia {
 	
-	// TODO: add logger
+	private static final Logger logger = LoggerFactory.getLogger(Theia.class);
 	
 	private static boolean glfwInit;
+	/*
+	 * This is for things that must be thrown on the main thread. 
+	 */
 	private static EventManager mainEventManager;
+	
+	/*
+	 * This one is for common things and throwing events
+	 */
+	private static EventManager eventManager;
 	
 	private Theia() {}
 	
 	public static Theia newBuilder() {
 		
 		if(!glfwInit) {
-			mainEventManager.fireEventAsync(Procedure.class, () -> GLFW.glfwSetErrorCallback(Theia::ErrorCallback));
-			mainEventManager.fireEventAsync(Procedure.class, Theia::InitilizeGlfw);
+			Future<Procedure> f = mainEventManager.submitEvent(Procedure.class, () -> GLFW.glfwSetErrorCallback(Theia::ErrorCallback));
+			try {
+				f.get();
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			f = mainEventManager.submitEvent(Procedure.class, Theia::InitilizeGlfw);
+			try {
+				f.get();
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		return new Theia();
@@ -31,11 +57,20 @@ public class Theia {
 	private static void InitilizeGlfw() {
 		if(!GLFW.glfwInit()) {
 			// TODO: log error
+			logger.error("Failed to initilize the GLFW library!");
 			System.exit(-1);
 		}
 	}
 	
-	public static void setMainEventManager() {
-		
+	public static EventManager getMainEventManager() {
+		return mainEventManager;
+	}
+	
+	public static void setMainEventManager(EventManager mainEventManager) {
+		 Theia.mainEventManager = mainEventManager;
+	}
+	
+	public Window build() {
+		return null;
 	}
 }

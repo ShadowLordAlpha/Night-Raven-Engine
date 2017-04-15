@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.shadowcs.nightraven.themis.EventManager;
-import com.shadowcs.nightraven.themis.ProvidedSingleThreadFactory;
+import com.shadowcs.nightraven.themis.ProvidedThreadFactory;
 import com.shadowcs.nightraven.themis.Themis;
 import com.shadowcs.nightraven.themis.util.function.Procedure;
 import sla.nightraven.theia.TheiaModule;
@@ -32,7 +32,7 @@ public class RavenCore {
 	 */
 	private EventManager mainThreadEventManager;
 	private Gson gson;
-	private ProvidedSingleThreadFactory mainThreadFactory = new ProvidedSingleThreadFactory();
+	private ProvidedThreadFactory mainThreadFactory = new ProvidedThreadFactory();
 	
 
 	public RavenCore() {
