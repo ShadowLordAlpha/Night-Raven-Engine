@@ -10,9 +10,16 @@ dependencies {
 	compile "org.lwjgl:lwjgl:${lwjglVersion}"
 	runtime "org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}"
 	
-	// lwjgl3 glfw bindings
+	// LWJGL3 Open-AL bindings
 	compile "org.lwjgl:lwjgl-openal:${lwjglVersion}"
 	runtime "org.lwjgl:lwjgl-openal:${lwjglVersion}:${lwjglNatives}"
+	
+	// LWJGL3 stb bindings
+	compile "org.lwjgl:lwjgl-stb:${lwjglVersion}"
+	runtime "org.lwjgl:lwjgl-stb:${lwjglVersion}:${lwjglNatives}"
+	
+	// Java Open Math Library
+	compile "org.joml:joml:${jomlVersion}"
 	
 	// Themis Module dependency, Event System
 	compile project(':Themis')

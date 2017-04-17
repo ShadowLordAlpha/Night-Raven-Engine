@@ -26,7 +26,20 @@ public class Theia {
 	 */
 	private static EventManager eventManager;
 	
+	private String title;
+	
 	private Theia() {}
+	
+	public Theia setTitle(String title) {
+		// TODO
+		return this;
+	}
+	
+	String getTitle() {
+		return this.title;
+	}
+	
+	
 	
 	public static Theia newBuilder() {
 		
@@ -45,6 +58,8 @@ public class Theia {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			glfwInit = true;
 		}
 		
 		return new Theia();
