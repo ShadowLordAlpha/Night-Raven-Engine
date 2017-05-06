@@ -34,7 +34,7 @@ import com.github.benmanes.caffeine.cache.LoadingCache;
  * @author Josh "ShadowLordAlpha"
  *
  */
-public class EventManager {
+public class EventManager implements AutoCloseable{
 	
 	private AsynchronousMode async;
 	private ExecutorService pool;
@@ -45,6 +45,7 @@ public class EventManager {
 		this.async = async;
 		this.pool = pool;
 		listenerCache = Caffeine.newBuilder().build(key -> ConcurrentHashMap.newKeySet());
+		
 	}
 
 	public <V> EventManager addListener(Class<V> clazz, Consumer<V> listener) {
@@ -120,5 +121,10 @@ public class EventManager {
 			default:
 				return null;
 		}
+	}
+
+	@Override
+	public void close() throws Exception {
+		pool.shutdown();
 	}
 }
