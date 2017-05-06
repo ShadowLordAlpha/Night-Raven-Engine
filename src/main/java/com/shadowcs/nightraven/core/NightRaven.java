@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.shadowcs.nightraven.theia.Theia;
+import com.shadowcs.nightraven.theia.Window;
 import com.shadowcs.nightraven.themis.EventManager;
 import com.shadowcs.nightraven.themis.ProvidedThreadFactory;
 import com.shadowcs.nightraven.themis.Themis;
@@ -48,7 +49,7 @@ public class NightRaven {
 		
 		// The main thread will always simply run procedure type events
 		getMainEventManager().addListener(Procedure.class, (procedure) -> procedure.invoke());
-		Theia.setMainEventManager(eventManager);
+		Window window = Theia.newBuilder().setMainEventManager(eventManager).build();
 		
 		
 		

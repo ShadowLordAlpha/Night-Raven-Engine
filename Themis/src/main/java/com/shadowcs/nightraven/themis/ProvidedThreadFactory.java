@@ -90,6 +90,8 @@ public class ProvidedThreadFactory implements ThreadFactory {
 			threadCount.incrementAndGet(); // Increment the value to bring it back to 0
 			return null; // request to repurpose thread was rejected so return null
 		}
+		
+		// TODO: set priorities and other thread properties?
 
 		// A thread is available to be repurposed
 		return new Thread(() -> {
